@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="ms"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rekod Data UKJK Mengikut Jabatan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#eef2f1;--sf:#fff;--ink:#14303a;--mut:#5b7078;--ln:#cfdad8;--pri:#1d6f8a;--pt:#fff;--gold:#b7791f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1b1f;--sf:#17272d;--ink:#e6efef;--mut:#9ab0b5;--ln:#2c424a;--pri:#4fb3d1;--pt:#06222b;--gold:#e0b35a}}
+:root[data-theme="dark"]{--bg:#0f1b1f;--sf:#17272d;--ink:#e6efef;--mut:#9ab0b5;--ln:#2c424a;--pri:#4fb3d1;--pt:#06222b;--gold:#e0b35a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.5 Figtree,system-ui,sans-serif}
+.app{max-width:1080px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:26px;font-weight:800;margin:0 0 4px}h2{font-size:17px;font-weight:600;margin:18px 0 8px}h2:first-child{margin-top:0}
+header p{margin:0 0 18px;color:var(--mut)}
+.g{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,1fr);gap:18px;align-items:start}
+.c{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:18px;margin-bottom:18px}
+.r{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);max-height:calc(100vh - 24px);overflow:auto}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.w{grid-column:1/-1}
+label{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:14px}
+label small{font-weight:400;color:var(--mut)}
+input,select{font:inherit;padding:9px 10px;border:1px solid var(--ln);border-radius:8px;background:var(--bg);color:var(--ink);width:100%;min-width:0}
+.t{display:grid;grid-template-columns:1fr 120px 190px;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--ln)}
+.chip{font-size:13px;color:var(--mut)}
+.act{display:flex;gap:10px;margin-top:18px}
+button{font:inherit;padding:10px 20px;border-radius:8px;border:1px solid var(--ln);background:var(--sf);color:var(--ink);cursor:pointer}
+button.p{background:var(--pri);color:var(--pt);border-color:var(--pri);font-weight:600}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
+.med{width:92px;height:92px;border-radius:50%;border:6px solid var(--gold);display:grid;place-items:center;font-size:46px;font-weight:800;margin:6px 0 12px}
+dl{margin:0}dt{color:var(--mut);font-size:13px;margin-top:10px}dd{margin:0;font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:7px 8px;border-bottom:1px solid var(--ln);text-align:center}.l{text-align:left}
+.sc{overflow-x:auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}.top h2{margin:0}
+#dbn,#hint{color:var(--gold);font-size:13px;margin:6px 0 0}
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;z-index:9}
+dialog{border:1px solid var(--ln);border-radius:12px;background:var(--sf);color:var(--ink);width:calc(100% - 32px);max-width:560px;padding:20px}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+#dmsg{color:var(--gold);min-height:20px;margin:8px 0 0}
+.cn{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.cn button{padding:2px 12px}
+.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}
+.cg i{font-style:normal;font-size:12px;color:var(--mut)}
+.cg button{padding:6px 0;font-size:13px;min-width:0;border-radius:6px}
+.cg .has{background:color-mix(in srgb,var(--pri) 18%,transparent);font-weight:600}
+.cg .sel{background:var(--pri);color:var(--pt);border-color:var(--pri)}
+.cg .td{border-color:var(--gold)}
+.cg sup{font-size:9px;margin-left:1px}
+.x{padding:3px 10px;font-size:13px}
+.mut{color:var(--mut);font-size:12px;margin:8px 0 0}
+#print{display:none}
+@media(max-width:820px){.g{grid-template-columns:1fr}.r{position:static;max-height:none}}
+@media(max-width:560px){.t{grid-template-columns:1fr 1fr}.chip{grid-column:1/-1}}
+@media print{@page{size:A4 landscape;margin:12mm}html,body{background:#fff!important}.app,dialog,#toast{display:none!important}#print{display:block;color:#000}
+#print h1{font-size:20px}#print p{margin:2px 0;font-size:13px}#print table{margin-top:10px;font-size:10px}#print th,#print td{border:1px solid #000;padding:3px 4px}}
+</style></head><body>
+<div class="app">
+<header><h1>Rekod Data UKJK Mengikut Jabatan</h1><p>Masukkan keputusan ujian. Markah, jumlah, gred, pencapaian dan prestasi akan dikira.</p></header>
+<div class="g">
+<section class="c">
+<h2>Maklumat staf</h2>
+<div class="f2">
+<label>Nama<input id="nama" autocomplete="off"></label>
+<label>No. Staf<input id="noStaf" inputmode="numeric" autocomplete="off"></label>
+<label>Jantina<select id="jantina"><option value="">Pilih jantina</option><option value="L">Lelaki</option><option value="W">Wanita</option></select></label>
+<label>Umur<input id="umur" type="number" min="20" max="99"></label>
+<label>Tarikh<input id="tarikh" type="date"></label>
+<label>Jabatan<select id="jabatan"></select></label>
+</div>
+<p id="hint"></p>
+<h2>Keputusan ujian</h2>
+<div id="ts"></div>
+<div class="act"><button id="simpan" class="p" disabled>Simpan</button><button id="cetak">Cetak</button></div>
+</section>
+<aside class="c r">
+<h2>Keputusan keseluruhan</h2>
+<div class="med" id="gred">–</div>
+<dl><dt>Jumlah keseluruhan</dt><dd id="tot">–</dd><dt>Pencapaian</dt><dd id="pc">Isi semua 5 ujian</dd><dt>Prestasi</dt><dd id="pr"></dd></dl>
+<h2>Kalendar rekod</h2><div id="cal"></div><p class="mut">Klik tarikh untuk semak.</p>
+</aside>
+</div>
+<section class="c">
+<div class="top"><h2>Rekod tersimpan: <span id="rt">Semua jabatan</span></h2><span><button id="sync">Refresh</button> <button id="resend" hidden>Hantar semula ke Sheet</button></span></div>
+<p id="dbn"></p>
+<div class="sc"><table><thead><tr><th>Bil.</th><th class="l">Nama</th><th>No. Staf</th><th>Jabatan</th><th>Jumlah</th><th>Gred</th><th>Sheet</th><th></th></tr></thead><tbody id="rb"></tbody></table></div>
+</section>
+</div>
+<dialog id="dlg"><h2>Semak sebelum simpan</h2><div id="rv"></div><p id="dmsg"></p>
+<div class="act"><button id="ok" class="p">Sahkan simpan</button><button id="bt">Kembali edit</button></div></dialog>
+<div id="toast" hidden></div>
+<div id="print"></div>
+<script>
+const JAB=["Fakulti Ekonomi dan Muamalat","Fakulti Kejuruteraan dan Alam Bina","Fakulti Kepimpinan dan Pengurusan","Fakulti Pengajian Bahasa Utama","Fakulti Pengajian dan Quran Sunnah","Fakulti Pergigian","Fakulti Perubatan dan Sains Kesihatan","Fakulti Sains dan Teknologi","Fakulti Syariah dan Undang-Undang","Institut Fatwa dan Halal","Institut Sains Islam","Jabatan Bendahari","Jabatan Canselori","Jabatan Keselamatan dan Penguatkuasaan","Jabatan Pembangunan dan Pengurusan Fasiliti","Jabatan Pendaftar","Jabatan Perpustakaan","Jabatan Undang-Undang","Kolej Permata Insan","Pejabat Audit Dalam","Pejabat Integriti","Pusat Hal Ehwal Pelajar","Pusat Islam","Pusat Jaminan Kualiti","Pusat Kebudayaan","Pusat Kecemerlangan Pengajaran dan Pembelajaran","Pusat Kemajuan Profesional dan Pendidikan Berterusan","Pusat Kerjaya dan Alumni","Pusat Kesihatan Universiti","Pusat Keusahawanan Universiti","Pusat Komunikasi Strategik","Pusat Libatsama Masyarakat dan Jaringan Industri","Pusat Pematuhan Syariah, Pengurusan Risiko dan Keselamatan dan Kesihatan Pekerjaan","Pusat Pembangunan Kemahiran Insaniah","Pusat Pembangunan Sistem dan Kejuruteraan","Pusat Penerbit","Pusat Pengajian Teras","Pusat Pengurusan Akademik","Pusat Pengurusan Penyelidikan dan Inovasi","Pusat Penyelidikan Ibnu Ummi Maktum","Pusat Perumahan Pelajar","Pusat Sukan","Pusat Tamhidi","Pusat Wakaf dan Zakat","USIM Alamiyyah"];
+const TESTS=[["tt","Tekan tubi (1 minit)","kali"],["bt","Bangkit tubi (1 minit)","kali"],["dj","Duduk dan jangkau","inci"],["lj","Lompat jauh","inci"],["lr","Larian 2.4 km","mm:ss"]];
+const LBL=["Tiada norma","Tidak Memuaskan","Kurang Memuaskan","Memuaskan","Cemerlang","Sangat Cemerlang"];
+const GR=[[18,"A","EMAS","SYABAS – TAHAP KECERGASAN YANG CEMERLANG"],[15,"B","PERAK","TAHNIAH – TAHAP KECERGASAN YANG BAIK"],[12,"C","GANGSA","TAHAP KECERGASAN MEMUASKAN"],[8,"D","KURANG CERGAS","BERI PERHATIAN MENINGKATKAN TAHAP KECERGASAN KESELURUHAN"],[0,"E","PERLU TINGKATKAN KECERGASAN","BERI PERHATIAN KEPADA ASPEK KECERGASAN UNTUK MENGELAKKAN RISIKO PENYAKIT HIPOKINETIK"]];
+/* Ambang minimum untuk markah 5,4,3,2 (selebihnya markah 1). Indeks umur: 20-29,30-39,40-49,50-59,60+ */
+const TT=[[50,40,30,20],[40,30,20,15],[30,25,20,15],[25,20,15,8],[20,15,10,5]];
+const BT={L:[[43,37,33,29],[36,31,27,22],[31,26,22,17],[26,22,18,13],[23,17,12,7]],W:[[36,31,25,21],[29,24,20,15],[25,20,15,7],[19,12,5,3],[16,12,4,2]]};
+const DJ={L:[27.01,17,6,1],W:[30.01,21,11,1]};
+const LJ={L:[88.01,79,69,60],W:[72.01,62,53,43]};
+/* Larian (saat): had atas markah 5,4,3,2,1 */
+const LR={L:[[720,900,1200,1500,1800],[900,1200,1500,1800,2100],[1080,1320,1620,1920,2220],[1200,1500,1800,2100,2400]],W:[[900,1200,1500,1800,2100],[1080,1320,1620,1920,2220],[1200,1500,1800,2100,2400],[1380,1680,1980,2160,2460]]};
+const $=s=>document.querySelector(s),V=k=>$("#"+k).value.trim();
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const sc=(v,t)=>v>=t[0]?5:v>=t[1]?4:v>=t[2]?3:v>=t[3]?2:1;
+const tm=s=>{const m=/^(\d{1,2}):([0-5]\d)$/.exec(s);return m?+m[1]*60+ +m[2]:NaN};
+const gr=t=>GR.find(x=>t>=x[0]);
+const today=()=>{const d=new Date();return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10)};
+const rd=x=>x.tarikh||new Date(x.ts-new Date(x.ts).getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const fmt=t=>t?t.split("-").reverse().join("/"):"";
+let cm=null,lastT="";
+const BLN=["Januari","Februari","Mac","April","Mei","Jun","Julai","Ogos","September","Oktober","November","Disember"];
+function renderCal(){
+ const t=V("tarikh"),j=V("jabatan"),td=today();
+ if(!cm||(t&&t!==lastT)){const d=new Date((t||td)+"T00:00:00");cm=[d.getFullYear(),d.getMonth()]}
+ lastT=t;
+ const [y,m]=cm,cnt={};
+ recs.forEach(x=>{if(!j||x.jabatan===j){const d=rd(x);cnt[d]=(cnt[d]||0)+1}});
+ const first=new Date(y,m,1).getDay(),n=new Date(y,m+1,0).getDate();
+ let h=`<div class="cn"><button id="cp" aria-label="Bulan sebelum">‹</button><b>${BLN[m]} ${y}</b><button id="cx" aria-label="Bulan seterusnya">›</button></div><div class="cg">`+["Ah","Is","Se","Ra","Kh","Ju","Sa"].map(d=>`<i>${d}</i>`).join("")+"<span></span>".repeat(first);
+ for(let d=1;d<=n;d++){const k=y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+  h+=`<button data-d="${k}" class="${(cnt[k]?"has ":"")+(k===t?"sel ":"")+(k===td?"td":"")}">${d}${cnt[k]?"<sup>"+cnt[k]+"</sup>":""}</button>`}
+ $("#cal").innerHTML=h+"</div>";
+ $("#cp").onclick=()=>{cm=m?[y,m-1]:[y-1,11];renderCal()};
+ $("#cx").onclick=()=>{cm=m<11?[y,m+1]:[y+1,0];renderCal()};
+ $("#cal").querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{$("#tarikh").value=b.dataset.d;upd()});
+}
+
+const toast=m=>{const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>t.hidden=true,m.length>60?9000:3500)};
+// Tukar URL Web App Apps Script di sini sahaja.
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbwEXSpqN-y5_VM7kKv-GfDTr5gEjnHCTHKj5K3lnYOyfWW7CiZBz4WZuv8gMEvDyYdMGg/exec";
+let recs=[],cur=null,lastErr="";
+try{recs=JSON.parse(localStorage.getItem("ukjk_recs")||"[]")}catch(e){}
+const persist=()=>{try{localStorage.setItem("ukjk_recs",JSON.stringify(recs))}catch(e){}};
+const newId=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2,10);
+recs.forEach(x=>{if(!x.id)x.id=newId()});
+async function kirim(list){
+ const u=SCRIPT_URL;if(!u)return{st:"tiada"};
+ const o={method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(list)};
+ let r;
+ try{r=await fetch(u,o)}catch(e){
+  try{await fetch(u,{...o,mode:"no-cors"});return{st:"hantar"}}
+  catch(e2){return{st:"gagal",msg:"Tiada sambungan ke URL Apps Script. Jika fail dibuka dalam pratonton Claude, muat turun dan buka dalam pelayar."}}
+ }
+ const t=await r.text();
+ try{const j=JSON.parse(t);return j.ok?{st:"ok"}:{st:"gagal",msg:"Ralat script: "+j.error}}
+ catch(e){return{st:"gagal",msg:"Jawapan bukan JSON (kod "+r.status+"). Semak akses Web App (Anyone) dan kebenaran. "+t.replace(/<[^>]+>/g," ").replace(/\s+/g," ").slice(0,120)}}
+}
+
+function calc(){
+ const a=+V("umur"),g=V("jantina"),r={},s={};
+ TESTS.forEach(([k])=>{r[k]=V(k);s[k]=null});
+ if(a>=20&&g){
+  const i=Math.min(Math.floor(a/10)-2,4),n=k=>r[k]!==""&&!isNaN(+r[k]);
+  if(n("tt"))s.tt=sc(+r.tt,TT[i]);
+  if(n("bt"))s.bt=a>69?0:sc(+r.bt,BT[g][i]);
+  if(n("dj"))s.dj=sc(+r.dj,DJ[g]);
+  if(n("lj"))s.lj=sc(+r.lj,LJ[g]);
+  const t=tm(r.lr);
+  if(!isNaN(t))s.lr=i>3?0:(l=>t<l[0]?5:t<=l[1]?4:t<=l[2]?3:t<=l[3]?2:t<=l[4]?1:0)(LR[g][i]);
+ }
+ const d=TESTS.filter(([k])=>s[k]!==null).length,total=TESTS.reduce((x,[k])=>x+(s[k]||0),0);
+ return{r,s,d,total,a,g,ok:!!(d===5&&V("nama")&&V("noStaf")&&V("jabatan")&&V("tarikh")&&a>=20&&g)};
+}
+function build(c){const G=gr(c.total);return{id:newId(),nama:V("nama"),jantina:c.g==="L"?"Lelaki":"Wanita",noStaf:V("noStaf"),jabatan:V("jabatan"),tarikh:V("tarikh"),umur:c.a,r:c.r,s:c.s,jumlah:c.total,gred:G[1],pencapaian:G[2],prestasi:G[3],ts:Date.now()}}
+function upd(){
+ const c=calc(),full=c.d===5,G=gr(c.total);
+ TESTS.forEach(([k])=>{const v=c.s[k];$("#c_"+k).textContent=v===null?"–":v===0?LBL[0]:v+" · "+LBL[v]});
+ $("#hint").textContent=V("umur")&&+V("umur")<20?"Norma UKJK bermula pada umur 20 tahun.":"";
+ $("#tot").textContent=full?c.total+" / 25":"–";
+ $("#gred").textContent=full?G[1]:"–";
+ $("#pc").textContent=full?G[2]:"Isi semua 5 ujian";
+ $("#pr").textContent=full?G[3]:"";
+ $("#simpan").disabled=!c.ok;
+ renderRecs();
+}
+function renderRecs(){
+ const j=V("jabatan"),t=V("tarikh"),rs=recs.filter(x=>(!j||x.jabatan===j)&&(!t||rd(x)===t));
+ renderCal();
+ $("#rt").textContent=(j||"Semua jabatan")+(t?", "+fmt(t):"");
+ const n=recs.filter(x=>!x.sent).length;$("#resend").hidden=!n;
+ $("#dbn").textContent=SCRIPT_URL?(n?n+" rekod belum dihantar ke Sheet.":"Semua rekod telah disimpan."):"Belum ada URL Apps Script. Rekod hanya disimpan dalam pelayar ini.";
+ $("#dbn").textContent+=lastErr?" Ralat terakhir: "+lastErr:"";
+ $("#rb").innerHTML=rs.length?rs.map((x,i)=>`<tr><td>${i+1}</td><td class="l">${esc(x.nama)}</td><td>${esc(x.noStaf)}</td><td>${esc(x.jabatan)}</td><td>${esc(x.jumlah)}</td><td>${esc(x.gred)}</td><td>${x.sent?"Dihantar":"Belum"}</td><td><button class="x" data-id="${esc(x.id)}">Padam</button></td></tr>`).join(""):`<tr><td colspan="8">Belum ada rekod.</td></tr>`;
+}
+function reset(){["nama","noStaf","jantina","umur",...TESTS.map(t=>t[0])].forEach(k=>$("#"+k).value="");upd();$("#nama").focus()}
+
+$("#simpan").onclick=()=>{
+ const c=calc();if(!c.ok)return;cur=build(c);$("#dmsg").textContent="";
+ $("#rv").innerHTML="<dl>"+[["Nama",cur.nama],["Jantina",cur.jantina],["No. Staf",cur.noStaf],["Umur",cur.umur],["Jabatan",cur.jabatan],["Tarikh",fmt(cur.tarikh)]].map(([a,b])=>`<dt>${a}</dt><dd>${esc(b)}</dd>`).join("")+"</dl>"+
+ `<div class="sc"><table><thead><tr><th class="l">Ujian</th><th>Hasil</th><th>Markah</th></tr></thead><tbody>`+TESTS.map(([k,n,u])=>`<tr><td class="l">${n}</td><td>${esc(cur.r[k])} ${u==="mm:ss"?"":u}</td><td>${cur.s[k]}</td></tr>`).join("")+`</tbody></table></div>`+
+ `<dl><dt>Jumlah keseluruhan</dt><dd>${cur.jumlah} / 25</dd><dt>Gred</dt><dd>${cur.gred}</dd><dt>Pencapaian</dt><dd>${esc(cur.pencapaian)}</dd><dt>Prestasi</dt><dd>${esc(cur.prestasi)}</dd></dl>`;
+ $("#dlg").showModal();
+};
+$("#bt").onclick=()=>$("#dlg").close();
+$("#ok").onclick=async()=>{
+ const b=$("#ok");b.disabled=true;
+ const k=await kirim([cur]),st=k.st;lastErr=k.msg||"";cur.sent=st==="ok";
+ recs.push(cur);persist();$("#dlg").close();reset();if(st==="hantar")setTimeout(sinkron,2000);
+ toast(st==="ok"?"Rekod telah disimpan.":st==="hantar"?"Rekod dihantar ke Google Sheet (tidak dapat disahkan).":st==="tiada"?"Rekod disimpan dalam pelayar. Isi URL Apps Script untuk hantar ke Sheet.":"Rekod disimpan dalam pelayar, tetapi gagal dihantar. "+lastErr);
+ b.disabled=false;
+};
+$("#resend").onclick=async()=>{
+ const p=recs.filter(x=>!x.sent);if(!p.length)return;
+ const k=await kirim(p),st=k.st;lastErr=k.msg||"";
+ if(st==="ok"||st==="hantar"){p.forEach(x=>{if(st==="ok")x.sent=true});if(st==="hantar")setTimeout(sinkron,2000);persist();renderRecs();toast("Rekod disimpan.")}else{renderRecs();toast(st==="tiada"?"Isi URL Apps Script dahulu.":"Gagal menghantar. "+lastErr)}
+};
+$("#cetak").onclick=()=>{
+ const j=V("jabatan"),t=V("tarikh");if(!j||!t){alert("Pilih jabatan dan tarikh dahulu.");return}
+ let rs=recs.filter(x=>x.jabatan===j&&rd(x)===t);
+ if(!rs.length){const c=calc();if(!c.ok){alert("Tiada rekod tersimpan untuk jabatan dan tarikh ini.");return}rs=[build(c)]}
+ const H=TESTS.map(([k,n,u])=>`<th colspan="2">${n} (${u})</th>`).join(""),S="<th>Pencapaian</th><th>Markah</th>".repeat(5);
+ const B=rs.map((x,i)=>`<tr><td>${i+1}</td><td class="l">${esc(x.nama)}</td>`+TESTS.map(([k])=>`<td>${esc(x.r[k])}</td><td>${esc(x.s[k])}</td>`).join("")+`<td>${esc(x.jumlah)}</td><td>${esc(x.gred)}</td><td>${esc(x.pencapaian)}</td><td class="l">${esc(x.prestasi)}</td></tr>`).join("");
+ $("#print").innerHTML=`<h1>UJIAN KECERGASAN & JASMANI KEBANGSAAN</h1><p>Jabatan: ${esc(j)}</p><p>Tarikh: ${new Date(t+"T00:00:00").toLocaleDateString("ms-MY",{day:"numeric",month:"long",year:"numeric"})}</p><table><thead><tr><th rowspan="2">Bil.</th><th rowspan="2">Nama</th>${H}<th rowspan="2">Jumlah skor</th><th rowspan="2">Gred</th><th rowspan="2">Pencapaian</th><th rowspan="2">Prestasi</th></tr><tr>${S}</tr></thead><tbody>${B}</tbody></table>`;
+ try{window.print()}catch(e){alert("Cetakan tidak dapat dibuka di sini. Buka halaman ini dalam tab sendiri.")}
+};
+let syncing=false;
+async function sinkron(manual){
+ const u=SCRIPT_URL;if(!u||syncing)return;syncing=true;
+ try{
+  const j=await(await fetch(u+(u.includes("?")?"&":"?")+"aksi=senarai")).json();
+  if(!j.ok)throw new Error(j.error||"ralat");
+  if(!Array.isArray(j.rows))throw new Error("Script belum dikemas kini. Deploy versi baharu.");
+  const ids=new Set(j.rows.map(x=>x.id));
+  recs=j.rows.concat(recs.filter(x=>x.sent!==true&&!ids.has(x.id)));
+  lastErr="";persist();renderRecs();
+  if(manual)toast("Kemaskini.");
+ }catch(e){lastErr="Gagal segerak: "+(e.message||e);renderRecs();if(manual)toast(lastErr)}
+ syncing=false;
+}
+async function padam(id){
+ const x=recs.find(r=>r.id===id);
+ if(!x||!confirm("Padam rekod "+x.nama+" ("+fmt(rd(x))+")?"))return;
+ let st="tiada";
+ if(SCRIPT_URL){
+  const k=await kirim({aksi:"padam",ids:[id]});st=k.st;lastErr=k.msg||"";
+  if(st==="gagal"&&x.sent){renderRecs();toast("Gagal memadam di Google Sheet, rekod tidak dipadam. "+lastErr);return}
+ }
+ recs=recs.filter(r=>r.id!==id);persist();renderRecs();
+ toast(st==="ok"?"Rekod dipadam.":st==="hantar"?"Permintaan padam dihantar ke Sheet (menunggu pengesahan).":"Rekod dipadam di page sahaja.");
+ if(st==="hantar")setTimeout(sinkron,2000);
+}
+$("#rb").onclick=e=>{const b=e.target.closest("[data-id]");if(b)padam(b.dataset.id)};
+$("#sync").onclick=()=>sinkron(true);
+$("#jabatan").innerHTML='<option value="">Pilih jabatan</option>'+JAB.map(j=>`<option>${esc(j)}</option>`).join("");
+$("#ts").innerHTML=TESTS.map(([k,n,u])=>`<div class="t"><label for="${k}">${n}<small>${u}</small></label><input id="${k}" ${k==="lr"?'placeholder="mm:ss" inputmode="numeric" autocomplete="off"':'type="number" step="'+(k==="dj"?"0.5":"1")+'"'}><span class="chip" id="c_${k}">–</span></div>`).join("");
+$("#tarikh").value=today();
+$("#noStaf").addEventListener("input",e=>{e.target.value=e.target.value.replace(/\D/g,"")});
+document.querySelectorAll("input,select").forEach(e=>{e.addEventListener("input",upd);e.addEventListener("change",upd)});
+upd();
+upd();
+sinkron();setInterval(sinkron,30000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)sinkron()});
+</script></body></html>
